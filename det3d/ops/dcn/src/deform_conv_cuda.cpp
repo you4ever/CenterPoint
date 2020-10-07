@@ -114,7 +114,7 @@ void shape_check(at::Tensor input, at::Tensor offset, at::Tensor *gradOutput,
            "input channels must divide deformable group size");
 
   if (outputWidth < 1 || outputHeight < 1)
-    TORCH_ERROR(
+    AT_ERROR(
         "Given input size: (%ld x %ld x %ld). "
         "Calculated output size: (%ld x %ld x %ld). Output size is too small",
         nInputPlane, inputHeight, inputWidth, nOutputPlane, outputHeight,
@@ -509,10 +509,10 @@ void modulated_deform_conv_cuda_forward(
   const int kernel_w_ = weight.size(3);
 
   if (kernel_h_ != kernel_h || kernel_w_ != kernel_w)
-    TORCH_ERROR("Input shape and kernel shape wont match: (%d x %d vs %d x %d).",
+    AT_ERROR("Input shape and kernel shape wont match: (%d x %d vs %d x %d).",
              kernel_h_, kernel_w, kernel_h_, kernel_w_);
   if (channels != channels_kernel * group)
-    TORCH_ERROR("Input shape and kernel channels wont match: (%d vs %d).",
+    AT_ERROR("Input shape and kernel channels wont match: (%d vs %d).",
              channels, channels_kernel * group);
 
   const int height_out =
@@ -589,10 +589,10 @@ void modulated_deform_conv_cuda_backward(
   const int kernel_h_ = weight.size(2);
   const int kernel_w_ = weight.size(3);
   if (kernel_h_ != kernel_h || kernel_w_ != kernel_w)
-    TORCH_ERROR("Input shape and kernel shape wont match: (%d x %d vs %d x %d).",
+    AT_ERROR("Input shape and kernel shape wont match: (%d x %d vs %d x %d).",
              kernel_h_, kernel_w, kernel_h_, kernel_w_);
   if (channels != channels_kernel * group)
-    TORCH_ERROR("Input shape and kernel channels wont match: (%d vs %d).",
+    AT_ERROR("Input shape and kernel channels wont match: (%d vs %d).",
              channels, channels_kernel * group);
 
   const int height_out =
